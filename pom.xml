@@ -6,7 +6,7 @@
     
     <groupId>org.lorislab.quarkus</groupId>
     <artifactId>quarkus-testcontainers-parent</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.3.0-SNAPSHOT</version>
     <name>quarkus-testcontainers-parent</name>
     <packaging>pom</packaging>
 
