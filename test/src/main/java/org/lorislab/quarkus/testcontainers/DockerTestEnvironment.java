@@ -89,7 +89,7 @@ public class DockerTestEnvironment {
             List<DockerComposeService> services = containerProperties.get(p);
             List<String> names = services.stream().map(DockerComposeService::getName).collect(Collectors.toList());
             log.info("\n------------------------------\nStart test containers\npriority: {}\nServices: {}\n------------------------------", p, names);
-            services.forEach(s -> s.start(this));
+            services.parallelStream().forEach(s -> s.start(this));
         });
     }
 
