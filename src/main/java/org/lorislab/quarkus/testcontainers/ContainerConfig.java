@@ -71,49 +71,53 @@ public class ContainerConfig {
 
     private void load(Map<String, Object> data) {
 
-        // docker image
-        image = (String) data.get("image");
-        // docker compose environments
-        environments = getMap(data, "environment");
-        // docker compose volumes
-        volumes = getMapFromList(data, "volumes", ":");
-        // docker compose ports
-        ports = getMapFromList(data, "ports", ":");
+        try {
+            // docker image
+            image = (String) data.get("image");
+            // docker compose environments
+            environments = getMap(data, "environment");
+            // docker compose volumes
+            volumes = getMapFromList(data, "volumes", ":");
+            // docker compose ports
+            ports = getMapFromList(data, "ports", ":");
 
-        // labels
-        Map<String, String> labels = getMapFromList(data, "labels", "=");
-        if (!labels.isEmpty()) {
-            // check if the service is only for the integration test
-            integrationTest = getLabelBoolean(labels, "test.integration", true);
-            unitTest = getLabelBoolean(labels, "test.unit", true);
+            // labels
+            Map<String, String> labels = getMapFromList(data, "labels", "=");
+            if (!labels.isEmpty()) {
+                // check if the service is only for the integration test
+                integrationTest = getLabelBoolean(labels, "test.integration", true);
+                unitTest = getLabelBoolean(labels, "test.unit", true);
 
-            // image pull policy
-            imagePull = PullPolicy.valueOf(labels.getOrDefault("test.image.pull", PullPolicy.DEFAULT.name()));
-            if (imagePull == PullPolicy.MAX_AGE) {
-                imagePullDuration = Duration.parse(labels.getOrDefault("test.image.pull.max_age", "PT10"));
+                // image pull policy
+                imagePull = PullPolicy.valueOf(labels.getOrDefault("test.image.pull", PullPolicy.DEFAULT.name()));
+                if (imagePull == PullPolicy.MAX_AGE) {
+                    imagePullDuration = Duration.parse(labels.getOrDefault("test.image.pull.max_age", "PT10"));
+                }
+
+                // wait log rule
+                waitLogRegex = labels.getOrDefault("test.Wait.forLogMessage.regex", null);
+                waitLogTimes = getLabelInteger(labels, "test.Wait.forLogMessage.times", 1);
+
+                // update log flag
+                log = getLabelBoolean(labels, "test.Log", true);
+
+                // update priority
+                priority = getLabelInteger(labels, "test.priority", DEFAULT_PRIORITY);
             }
 
-            // wait log rule
-            waitLogRegex = labels.getOrDefault("test.Wait.forLogMessage.regex", null);
-            waitLogTimes = getLabelInteger(labels, "test.Wait.forLogMessage.times", 1);
-
-            // update log flag
-            log = getLabelBoolean(labels, "test.Log", true);
-
-            // update priority
-            priority = getLabelInteger(labels, "test.priority", DEFAULT_PRIORITY);
+            // test properties store in the labels
+            labels.forEach((k, v) -> {
+                if (k.startsWith("test.property")) {
+                    String key = k.substring("test.property.".length());
+                    properties.add(TestPropertyLoader.createTestProperty(key, v));
+                } else if (k.startsWith("test.env.")) {
+                    String key = k.substring("test.env.".length());
+                    refEnvironments.add(TestPropertyLoader.createTestProperty(key, v));
+                }
+            });
+        } catch (Exception ex) {
+            throw new IllegalStateException("Error reading the container configuration", ex);
         }
-
-        // test properties store in the labels
-        labels.forEach((k, v) -> {
-            if (k.startsWith("test.property")) {
-                String key = k.substring("test.property.".length());
-                properties.add(TestPropertyLoader.createTestProperty(key, v));
-            } else if (k.startsWith("test.env.")) {
-                String key = k.substring("test.env.".length());
-                refEnvironments.add(TestPropertyLoader.createTestProperty(key, v));
-            }
-        });
     }
 
 

@@ -59,6 +59,7 @@ public class DockerComposeService {
 
     public void start(DockerTestEnvironment environment) {
         if (container == null) {
+            log.error("The docker container is null! Name: '{}', Image: '{}'", config.name, config.image);
             return;
         }
         // update environment variables
