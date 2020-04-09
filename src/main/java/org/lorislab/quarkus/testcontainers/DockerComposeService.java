@@ -64,7 +64,7 @@ public class DockerComposeService {
         }
         // update environment variables
         Map<String, String> env = createValues(environment, config.refEnvironments);
-        log.info("Service: '{}' add test environment variables: {}", config.name, env);
+        DockerTestSystemLogger.log("Service: '" + config.name + "' add test environment variables: " + env);
         container.withEnv(env);
 
         // start container
@@ -72,7 +72,7 @@ public class DockerComposeService {
 
         // update properties
         Map<String, String> prop = createValues(environment, config.properties);
-        System.out.println("Service: '{}' update test properties: {}");
+        DockerTestSystemLogger.log("Service: '" + config.name + "' update test properties: " +  prop);
         prop.forEach(System::setProperty);
     }
 
