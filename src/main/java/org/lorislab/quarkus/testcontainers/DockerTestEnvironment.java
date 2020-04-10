@@ -18,6 +18,7 @@ package org.lorislab.quarkus.testcontainers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testcontainers.DockerClientFactory;
 import org.testcontainers.containers.Network;
 import org.testcontainers.shaded.org.yaml.snakeyaml.Yaml;
 
@@ -82,6 +83,10 @@ public class DockerTestEnvironment {
     }
 
     public void start() {
+        DockerTestSystemLogger.log("Docker client ping ...");
+        DockerClientFactory.instance().client().pingCmd().exec();
+
+
         List<Integer> priorities = new ArrayList<>(containerProperties.keySet());
         Collections.sort(priorities);
 
