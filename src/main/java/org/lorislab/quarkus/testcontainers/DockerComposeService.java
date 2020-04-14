@@ -116,7 +116,9 @@ public class DockerComposeService {
 
         try (GenericContainer<?> result = new GenericContainer<>(config.image)) {
             result.withNetwork(network).withNetworkAliases(config.name);
-
+            if (config.command != null && !config.command.isBlank()) {
+                result.withCommand(config.command);
+            }
             // image pull policy
             switch ( config.imagePull) {
                 case ALWAYS:
