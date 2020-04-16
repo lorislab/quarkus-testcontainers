@@ -78,8 +78,8 @@ For integration test we set up `quarkus.http.test-port=$${port:quarkus-test:8080
 
 ### Java code
 We need to add these annotations to the `AbstractTest` class:
-* `@QuarkusTestResource(DockerComposeTestResource.class)` this annotation will star the docker test environment for unit tests.
-* `@QuarkusTestcontainers` this annotation will start the docker test environment for integration test `@NativeImageTest`.
+* `@QuarkusTestResource(DockerComposeTestResource.class)` this annotation will start the docker test environment for unit tests.
+* `@QuarkusTestcontainers` this annotation will start the docker test environment and disable start of the native image for integration test `@NativeImageTest`.
 
 ```java
 import io.quarkus.test.common.QuarkusTestResource;
