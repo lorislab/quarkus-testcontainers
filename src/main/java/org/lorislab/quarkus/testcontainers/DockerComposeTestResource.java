@@ -1,6 +1,8 @@
 package org.lorislab.quarkus.testcontainers;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.*;
