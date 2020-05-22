@@ -13,18 +13,26 @@ import java.util.stream.Collectors;
  */
 public class DockerComposeTestResource implements QuarkusTestResourceLifecycleManager{
 
+    private static final Logger log = LoggerFactory.getLogger(DockerComposeTestResource.class);
+
+    public static final String PROP_DISABLE = "lorislab.testcontainers.disable";
+
     /**
      * The docker test environment.
      */
-    protected DockerTestEnvironment environment;
+    protected DockerTestEnvironment environment = null;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Map<String, String> start() {
-        environment = new DockerTestEnvironment();
-        environment.start();
+        if (System.getProperty(PROP_DISABLE) == null) {
+            environment = new DockerTestEnvironment();
+            environment.start();
+        } else {
+            log.info("Quarkus test containers extension is disabled. '{}'", PROP_DISABLE);
+        }
         return Collections.emptyMap();
     }
 
@@ -33,7 +41,9 @@ public class DockerComposeTestResource implements QuarkusTestResourceLifecycleMa
      */
     @Override
     public void stop() {
-        environment.stop();
+        if (environment != null) {
+            environment.stop();
+        }
     }
 
     /**
