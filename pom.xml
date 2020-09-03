@@ -4,9 +4,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.oberstrike.quarkus</groupId>
+    <groupId>org.lorislab.quarkus</groupId>
     <artifactId>quarkus-testcontainers</artifactId>
-    <version>0.13.0-SNAPSHOT</version>
+    <version>0.12.0-SNAPSHOT</version>
     <name>quarkus-testcontainers</name>
     <packaging>jar</packaging>
 
@@ -22,9 +22,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/oberstrike/quarkus-testcontainers.git</connection>
-        <developerConnection>scm:git:github.com:oberstrike/quarkus-testcontainers.git</developerConnection>
-        <url>https://github.com/oberstrike/quarkus-testcontainers</url>
+        <connection>scm:git:https://github.com/lorislab/quarkus-testcontainers.git</connection>
+        <developerConnection>scm:git:github.com:lorislab/quarkus-testcontainers.git</developerConnection>
+        <url>https://github.com/lorislab/quarkus-testcontainers</url>
     </scm>
 
     <organization>
@@ -37,10 +37,6 @@
             <name>Andrej Petras</name>
             <email>andrej@lorislab.org</email>
             <organizationUrl>https://www.lorislab.org</organizationUrl>
-        </developer>
-        <developer>
-            <name>Markus Jürgens</name>
-            <email>markus.juergens@gmx.de</email>
         </developer>
     </developers>
 
@@ -76,12 +72,10 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
