@@ -32,7 +32,7 @@ public class ContainerConfig {
 
     public String name;
 
-    public String command;
+    public List<String> commands;
 
     public boolean integrationTest = true;
 
@@ -83,7 +83,16 @@ public class ContainerConfig {
             // docker compose ports
             ports = getMapFromList(data, "ports", ":");
             // command
-            command = (String) data.get("command");
+            Object result = data.get("command");
+            commands = new ArrayList<>();
+
+            if(  result instanceof String){
+                commands.add( (String) result);
+            }else if (result instanceof List){
+                commands = (ArrayList<String>) data.get("command");
+            }
+
+
 
             // labels
             Map<String, String> labels = getMapFromList(data, "labels", "=");
@@ -123,7 +132,6 @@ public class ContainerConfig {
             throw new IllegalStateException("Error reading the container configuration", ex);
         }
     }
-
 
 
     private static Map<String, String> getMap(Map<String, Object> properties, String key) {

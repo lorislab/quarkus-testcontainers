@@ -72,7 +72,7 @@ public class DockerComposeService {
 
         // update properties
         Map<String, String> prop = createValues(environment, config.properties);
-        DockerTestSystemLogger.log("Service: '" + config.name + "' update test properties: " +  prop);
+        DockerTestSystemLogger.log("Service: '" + config.name + "' update test properties: " + prop);
         prop.forEach(System::setProperty);
     }
 
@@ -116,11 +116,13 @@ public class DockerComposeService {
 
         try (GenericContainer<?> result = new GenericContainer<>(config.image)) {
             result.withNetwork(network).withNetworkAliases(config.name);
-            if (config.command != null && !config.command.isBlank()) {
-                result.withCommand(config.command);
+            if (config.commands != null && !config.commands.isEmpty()) {
+                for (String command : config.commands) {
+                    result.withCommand(command);
+                }
             }
             // image pull policy
-            switch ( config.imagePull) {
+            switch (config.imagePull) {
                 case ALWAYS:
                     result.withImagePullPolicy(PullPolicy.alwaysPull());
                     break;
