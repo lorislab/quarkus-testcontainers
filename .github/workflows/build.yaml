@@ -20,4 +20,4 @@ jobs:
         with:
           java-version: 11
       - name: Build project
-        run: mvn clean package
+        run: mvn --batch-mode clean package

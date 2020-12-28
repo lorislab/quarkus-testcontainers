@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: maven
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "23:00"
+      timezone: Europe/Paris
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+    allow:
+      - dependency-name: io.quarkus:quarkus-bom
+    rebase-strategy: disabled

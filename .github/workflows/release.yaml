@@ -4,7 +4,6 @@ on:
     tags:
       - '**'
 env:
-  MAVEN_CLI_OPTS: "-s .github/m2/settings.xml --batch-mode"
   GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
   OOSRH_USERNAME: ${{ secrets.OOSRH_USERNAME }}
   OOSRH_PASSWORD: ${{ secrets.OOSRH_PASSWORD }}
@@ -18,9 +17,18 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          server-id: ossrh
+          server-username: OOSRH_USERNAME
+          server-password: OOSRH_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_KEY_SECRET }}
+          gpg-passphrase: GPG_PASSPHRASE
       - name: Set the release version
         run: mvn semver-release:version-release
-      - name: Install GPG key
-        run: echo -e "${{ secrets.GPG_KEY_SECRET }}" | gpg --batch --import --passphrase "$GPG_PASSPHRASE"
       - name: Deploy release
-        run: mvn $MAVEN_CLI_OPTS deploy -Prelease
+        run: mvn deploy -DskipTests -Prelease
+      - name: Create release
+        uses: lorislab/changelog-action@v1.0.0
+        with:
+          args: generate --create-release --close-version --file .github/changelog.yaml
+        env:
+          CHANGELOG_TOKEN: ${{ secrets.GITHUB_TOKEN }}

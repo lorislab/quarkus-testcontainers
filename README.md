@@ -3,9 +3,9 @@
 [![License](https://img.shields.io/github/license/lorislab/quarkus-testcontainers?style=for-the-badge&logo=apache)](https://www.apache.org/licenses/LICENSE-2.0)
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/lorislab/quarkus-testcontainers/build/master?logo=github&style=for-the-badge)](https://github.com/lorislab/quarkus-testcontainers/actions?query=workflow%3Amaster)
 [![Maven Central](https://img.shields.io/maven-central/v/org.lorislab.quarkus/quarkus-testcontainers?logo=java&style=for-the-badge)](https://maven-badges.herokuapp.com/maven-central/org.lorislab.quarkus/quarkus-testcontainers)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/lorislab/quarkus-testcontainers?logo=github&style=for-the-badge)](https://github.com/lorislab/quarkus-testcontainers/releases/latest)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/lorislab/quarkus-testcontainers?sort=semver&logo=github&style=for-the-badge)](https://github.com/lorislab/quarkus-testcontainers/releases/latest)
 
-Quarkus testcontainers extension
+Quarkus Testcontainers extension
 
 * [Quarkus](https://quarkus.io/)
 * [Testcontainers](https://www.testcontainers.org/)

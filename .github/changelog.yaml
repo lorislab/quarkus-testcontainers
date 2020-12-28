@@ -1,0 +1,22 @@
+sections:
+- title: Major changes
+  labels:
+    - "release/super-feature"
+- title: Complete changelog
+  labels:
+    - "bug"
+    - "enhancement"
+    - "dependencies"
+template: |
+  Maven dependency:
+  ```xml
+  <dependency>
+    <groupId>org.lorislab.quarkus</groupId>
+    <artifactId>quarkus-testcontainers</artifactId>
+    <version>{{ .Version }}</version>
+    <scope>test</scope>
+  </dependency>
+  ```
+  {{ range $section := .Sections }}{{ if $section.Items }}### {{ $section.GetTitle }}{{ range $item := $section.Items }}
+  * [#{{ $item.GetID }}]({{ $item.GetURL }}) - {{ $item.GetTitle }}{{ end }}{{ end }}
+  {{ end }}
